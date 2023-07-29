@@ -8,31 +8,40 @@ import {
   Code,
   Grid,
   theme,
+  extendTheme,
+  Container,
+  Heading,
+  Button
 } from "@chakra-ui/react"
 import { ColorModeSwitcher } from "./ColorModeSwitcher"
 import { Logo } from "./Logo"
+import '@fontsource/bungee';
+import '@fontsource/poppins/800.css';
+import QuestionBox from "./components/QuestionBox";
 
-export const App = () => (
+export const App = () => {
+  const theme = extendTheme({
+  fonts: {
+    heading: `'Bungee', sans-serif`,
+    body: `'Poppins', sans-serif`,
+  },
+})
+  return(
   <ChakraProvider theme={theme}>
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <VStack spacing={8}>
-          <Logo h="40vmin" pointerEvents="none" />
-          <Text>
-            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
-          </Text>
-          <Link
-            color="teal.500"
-            href="https://chakra-ui.com"
-            fontSize="2xl"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn Chakra
-          </Link>
-        </VStack>
-      </Grid>
+  <Container maxW='70%' py="150px" height="inherit">
+    <Heading pb = "50px">
+      Search the stack
+    </Heading>
+    <Button bg="blue.300">
+      <Text color = "white">
+        Find Questions
+      </Text>
+    </Button>
+    <Box pt="100px">
+      <QuestionBox/>
     </Box>
+
+    </Container>
   </ChakraProvider>
 )
+}
