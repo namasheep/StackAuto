@@ -16,29 +16,30 @@ import {
   Badge,
   HStack
 } from "@chakra-ui/react"
-
-function QuestionBox (props:any){
+import parse from 'html-react-parser';
+function QuestionBox ({question}:{question:any}){
   const [expanded, setExpanded] = useState(false);
+
   return (
-    <Box width = "100%" bg = "#F5F5F5" borderRadius = "10">
+    <Box width = "100%" bg = "#F5F5F5" borderRadius = "10" onClick={() => setExpanded(!expanded)}>
       <Box fontSize="sm" py = "20px" px = "20px" width = "100%" height = {expanded?"auto":"120px"}>
         <HStack width = "100%">
-          <Text>
-            {props.title||"Question title goes here"}
+          <Text noOfLines={expanded?[]:[1]} width = {expanded?"auto":"30%"}>
+            {question.title||"Question title goes here"}
           </Text>
+          {question.tags.length >0?
           <Badge bg = "#6F6F6F">
             <Text color = "white">
-            Category
+            {question.tags[0]}
             </Text>
-          </Badge>
+          </Badge>:<div/>}
         </HStack>
-        <Box mt = "15px" height = {expanded?"auto":"20px"}>
-
-          <Text color="#6F6F6F" noOfLines={[1, 2]}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quis mi vitae leo dignissim porttitor. Phasellus vitae nibh nec lacus iaculis ultricies vel ut est. Donec fermentum blandit euismod. Vivamus elementum nisl nisl, sit amet tincidunt erat maximus ac. Pellentesque iaculis ante urna, ut lacinia odio aliquam nec. Etiam tempor scelerisque justo, nec convallis felis venenatis et. Nullam pretium orci eros, a hendrerit magna gravida cursus.
-
-
+        <Box mt = "15px" overflowY="hidden" color="#6F6F6F" height = {expanded?"auto":"20px"}>
+        <Text>
+        {parse(`${question.body}`)}
           </Text>
+
+          
         </Box>
       </Box>
     </Box>
