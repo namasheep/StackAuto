@@ -22,6 +22,7 @@ import '@fontsource/bungee';
 import '@fontsource/poppins/800.css';
 import QuestionBox from "./components/QuestionBox";
 import ApiClient from "./classes/ApiClient"
+import OpenAI from "./classes/OpenAI"
 export const App = () => {
   useEffect(() => {
     // Replace these values with your actual OAuth2 credentials
@@ -50,7 +51,7 @@ export const App = () => {
     },
   })
   const [questions, setQuestions] = useState([{}]);
-  const StackAPI = new ApiClient("https://api.stackexchange.com/");
+  const myAI = new OpenAI();
   const apiAuth = "/oauth/dialog?client_id=26882&scope=read_inbox,write_access,no_expiry&redirect_uri=http://localhost:3000/"
   const key = "DoslPho2rbSdieSWFDdclA(("
   async function qSearch(){
@@ -81,9 +82,10 @@ export const App = () => {
     </Button>
     
     <VStack pt="100px">
-      {questions.map((question) => (
-        <QuestionBox question={question}/>
-      ))}
+
+      {questions.length>1?questions.map((question) => (
+        <QuestionBox question={question} AI = {myAI}/>
+      )):<div/>}
       
       
     </VStack>
